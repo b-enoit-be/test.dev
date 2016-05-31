@@ -1,0 +1,39 @@
+version: "2"
+services:
+
+  httpd:
+    image: httpd
+    container_name: http
+    ports:
+      - "80:80"
+      - "993:993"
+    volumes:
+      - ./src:/usr/local/apache2/htdocs
+      - ./conf/httpd/custom:/usr/local/apache2/conf/custom
+      - ./conf/httpd/httpd.conf:/usr/local/apache2/conf/httpd.conf
+    links:
+      - php
+    environment:
+      TZ: Europe/Brussels
+
+  php:
+    build: ./php-fpm
+    container_name: php
+    volumes:
+      - ./src:/usr/local/apache2/htdocs
+    links:
+      - mysql
+    environment:
+      TZ: Europe/Brussels
+
+  mysql:
+    image: mariadb
+    container_name: database
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db:/var/lib/mysql
+      - ./conf/mysql/my.cnf:/etc/mysql/my.cnf
+    environment:
+      TZ: Europe/Brussels
+      MYSQL_ROOT_PASSWORD: root

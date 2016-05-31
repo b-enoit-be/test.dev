@@ -1,0 +1,5 @@
+db/
+src/*
+!src/info.php
+.idea
+.DS_Store
