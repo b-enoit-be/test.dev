@@ -27,7 +27,7 @@ services:
       TZ: Europe/Brussels
 
   mysql:
-    image: mariadb
+    image: percona
     container_name: database
     ports:
       - "3306:3306"
